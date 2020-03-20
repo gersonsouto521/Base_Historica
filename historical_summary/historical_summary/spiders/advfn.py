@@ -7,16 +7,16 @@ class AdvfnSpider(scrapy.Spider):
     start_urls = ['https://br.advfn.com/bolsa-de-valores/bovespa/%s/historico'%acao_escolhida2]
 
     def parse(self, response):
-        title = response.xpath('.//h1/strong/text()').extract()
-        codigo_da_acao = response.xpath('.//tr[2]/td[2]/b/text()').extract()
-        ativo = response.xpath('//*[@id="quoteElementPiece1"]/text()').extract()
+        title = response.xpath('.//h1/strong/text()').extract_first()
+        codigo_da_acao = response.xpath('.//tr[2]/td[2]/b/text()').extract_first()
+        ativo = response.xpath('//*[@id="quoteElementPiece1"]/text()').extract_first()
         historicos = response.xpath('//div[2]/table[@class="table_element_class"]//tr')
         for historico in historicos:
             base = historico.xpath('.')
             periodo = base.xpath('.//td[@class="String Column1"]/text()').extract_first()
             abe = base.xpath('.//td[@class="Numeric Column2"]/text()').extract_first()
-            max_ = base.xpath('.//td[@class="Numeric Column3"]/text()').extract_first()
-            min_ = base.xpath('.//td[@class="Numeric Column4"]/text()').extract_first()
+            maximo = base.xpath('.//td[@class="Numeric Column3"]/text()').extract_first()
+            minimo = base.xpath('.//td[@class="Numeric Column4"]/text()').extract_first()
             preco_med = base.xpath('.//td[@class="Numeric Column5"]/text()').extract_first()
             vol_med = base.xpath('.//td[@class="Numeric Column6"]/text()').extract_first()
             variacao = base.xpath('.//td[@class="Numeric Column7"]/text()').extract_first()
@@ -27,8 +27,8 @@ class AdvfnSpider(scrapy.Spider):
                 'ativo':ativo,
                 'periodo':periodo,
                 'abe':abe,
-                'max_':max_,
-                'min_':min_,
+                'maximo':maximo,
+                'minimo':minimo,
                 'preco_med':preco_med,
                 'vol_med':vol_med,
                 'variacao':variacao,
