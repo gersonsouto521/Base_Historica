@@ -7,7 +7,8 @@ class AdvfnSpider(scrapy.Spider):
     start_urls = ['https://br.advfn.com/bolsa-de-valores/bovespa/%s/historico'%acao_escolhida2]
 
     def parse(self, response):
-        title = response.xpath('.//h1/strong').extract()
+        title = response.xpath('.//h1/strong/text()').extract()
+        codigo_da_acao = response.xpath('.//tr[2]/td[2]/b/text()').extract()
         ativo = response.xpath('//*[@id="quoteElementPiece1"]/text()').extract()
         historicos = response.xpath('//div[2]/table[@class="table_element_class"]//tr')
         for historico in historicos:
@@ -22,6 +23,7 @@ class AdvfnSpider(scrapy.Spider):
             porcentagem = base.xpath('//td[@class="Numeric Column8 ColumnLast"]/text()').extract_first()
             yield{
                 'title':title,
+                'codigo_da_acao':codigo_da_acao,
                 'ativo':ativo,
                 'periodo':periodo,
                 'abe':abe,
