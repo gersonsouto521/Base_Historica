@@ -1,4 +1,5 @@
-print('empresas cadastradas')
+print('----------------------------------')
+print('CODIGO DE AÇÕES DISPONIVEIS:')
 nome_acao = ['ibov', 'itub4', 'itub3', 'itsa4', 'itsa3', 'rail3', 'vale3', 'oibr3', 'oibr4', 'mglu3', 'petr4', 'petr3']
 acao_escolhida = []
 codigo_empresa = {
@@ -17,15 +18,16 @@ codigo_empresa = {
         }
 print('IBOV/ ITUB4/ ITUB3/ ITSA4/ ITSA3/ RAIL3/ VALE3/ OIBR3/ OIBR4/ MGLU3/ PETR4/ PETR3')
 
-def comando():
+def solicitar_codigo():
+    print('----------------------------------')
     codigo_acao = input('Por favor, informe o codigo da Acão: ')
     if codigo_acao.lower() in(nome_acao):
         cod = codigo_empresa[codigo_acao.lower()]
         acao_escolhida.append(cod)
     else:
         print('Desculpe ação invalida, por favor tente novamente: ')
-        comando()
+        solicitar_codigo()
 
-comando()
+solicitar_codigo()
 acao_escolhida2 = (acao_escolhida[0])
 
